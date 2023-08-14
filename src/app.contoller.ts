@@ -1,9 +1,13 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 
 @Controller({})
 export class appController {
   @Get()
-  getUser(): string {
-    return 'i am the user';
+  getUser() {
+    return { name: 'justice' };
   }
+    @Post()
+    sendData() {
+        return "i am sending  data"
+    }
 }
