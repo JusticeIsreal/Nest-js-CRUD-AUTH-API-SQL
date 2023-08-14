@@ -1,13 +1,35 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Req,
+} from '@nestjs/common';
+import { Request } from 'express';
 
 @Controller({})
 export class appController {
   @Get()
-  getUser() {
+  getUsers() {
     return { name: 'justice' };
   }
-    @Post()
-    sendData() {
-        return "i am sending  data"
-    }
+  @Get('/:userId')
+  getUser(@Param() params: { userId: number }) {
+    return params;
+  }
+  @Post()
+  sendData(@Req() req: Request) {
+    return req.body;
+  }
+  @Patch('/:userId')
+  updateData(@Req() req: Request) {
+    return req.body;
+  }
+
+  @Delete('/:userId')
+  deleteUser(@Param() params: { userId: number }) {
+    return params;
+  }
 }
