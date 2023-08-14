@@ -8,28 +8,33 @@ import {
   Req,
 } from '@nestjs/common';
 import { Request } from 'express';
+import { UserService } from './user.service';
 
 @Controller('/user')
 export class userController {
+  constructor(private userService: UserService) {}
   @Get()
-  getUsers() {
-    return { name: 'justice' };
+  readUsers() {
+    return this.userService.getAllUsers();
   }
+
   @Get('/:userId')
-  getUser(@Param() params: { userId: number }) {
-    return params;
+  readAUser(@Param() param: { userId: number }) {
+    return this.userService.getSingleUser(param);
   }
+
   @Post()
-  sendData(@Req() req: Request) {
-    return req.body;
+  postUser(@Req() req: Request) {
+    return this.userService.postAUser(req);
   }
+
   @Patch('/:userId')
-  updateData(@Req() req: Request) {
-    return req.body;
+  updateUser(@Req() req: Request, @Param() param: { userId: number }) {
+    return this.userService.updateSingleUser(req, param);
   }
 
   @Delete('/:userId')
-  deleteUser(@Param() params: { userId: number }) {
-    return params;
+  deleteUser(@Param() param: { userId: number }) {
+    return this.userService.deleteSingleUser(param);
   }
 }
