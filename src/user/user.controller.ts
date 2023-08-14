@@ -1,14 +1,17 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   Req,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { UserService } from './user.service';
+import { postUserBody, updateUserBody } from './dto/user.dto';
 
 @Controller('/user')
 export class userController {
@@ -19,22 +22,25 @@ export class userController {
   }
 
   @Get('/:userId')
-  readAUser(@Param() param: { userId: number }) {
-    return this.userService.getSingleUser(param);
+  readAUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userService.getSingleUser(userId);
   }
 
   @Post()
-  postUser(@Req() req: Request) {
-    return this.userService.postAUser(req);
+  postUser(@Body() body: postUserBody) {
+    return this.userService.postAUser(body);
   }
 
   @Patch('/:userId')
-  updateUser(@Req() req: Request, @Param() param: { userId: number }) {
-    return this.userService.updateSingleUser(req, param);
+  updateUser(
+    @Body() body: updateUserBody,
+    @Param('userId', ParseIntPipe) userId: number,
+  ) {
+    return this.userService.updateSingleUser(body, userId);
   }
 
   @Delete('/:userId')
-  deleteUser(@Param() param: { userId: number }) {
-    return this.userService.deleteSingleUser(param);
+  deleteUser(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userService.deleteSingleUser(userId);
   }
 }
