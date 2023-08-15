@@ -8,7 +8,7 @@ export class postUserBody {
   email: string;
 
   @IsNotEmpty()
-  password: any;
+  password: string;
 }
 export class updateUserBody {
   @IsString()
@@ -16,4 +16,7 @@ export class updateUserBody {
 
   @IsEmail()
   email: string;
+
+  @IsString()
+  password: string;
 }

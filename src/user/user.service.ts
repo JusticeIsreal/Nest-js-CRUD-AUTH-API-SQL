@@ -21,10 +21,16 @@ export class UserService {
   postAUser(body: postUserBody) {
     return this.userRepository.save(body);
   }
+
   updateSingleUser(body: updateUserBody, userId: number) {
     return this.userRepository.update(userId, body);
   }
   deleteSingleUser(userId: number) {
     return this.userRepository.delete(userId);
+  }
+
+  // grab email for JWT Hashing
+  findEmail(email: string) {
+    return this.userRepository.findOne({ where: { email: email } });
   }
 }
