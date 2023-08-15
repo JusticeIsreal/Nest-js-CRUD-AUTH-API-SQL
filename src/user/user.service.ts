@@ -16,15 +16,15 @@ export class UserService {
     return this.userRepository.find();
   }
   getSingleUser(userId: number) {
-    return { userId };
+    return this.userRepository.findOne({ where: { id: userId } });
   }
   postAUser(body: postUserBody) {
-    return body;
+    return this.userRepository.save(body);
   }
   updateSingleUser(body: updateUserBody, userId: number) {
-    return { body: body, userId };
+    return this.userRepository.update(userId, body);
   }
   deleteSingleUser(userId: number) {
-    return { userId };
+    return this.userRepository.delete(userId);
   }
 }
