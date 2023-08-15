@@ -4,10 +4,22 @@ import { userModule } from 'src/user/user.module';
 import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { config } from 'dotenv'; // Import the config function from dotenv
+
+// Load environment variables from .env file
+config();
 
 @Module({
   controllers: [AuthController],
-  imports: [userModule, PassportModule],
+  imports: [
+    userModule,
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   providers: [AuthService, LocalStrategy],
 })
 export class AuthModule {}

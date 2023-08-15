@@ -11,6 +11,6 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('/login')
   login(@Body() body: postUserBody) {
-    return this.authService.validateUser(body.email, body.password);
+    return this.authService.login(body);
   }
 }
